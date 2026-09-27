@@ -1,25 +1,44 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>CORS PoC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico CORS</title>
 </head>
 <body>
-  <h2>CORS PoC</h2>
-  <pre id="result">Testando...</pre>
+  <h2>Diagnóstico CORS</h2>
+  <pre id="result">Iniciando...</pre>
 
   <script>
-    fetch("https://marketplace-api.meupainelhost.uol.com.br/product?id=SEU_ID", {
+    const result = document.getElementById("result");
+
+    const url =
+      "https://marketplace-api.meupainelhost.uol.com.br/product?id=SEU_ID";
+
+    result.textContent =
+      "Origem desta página:\n" + window.location.origin +
+      "\n\nEnviando requisição...";
+
+    fetch(url, {
+      method: "GET",
       credentials: "include"
     })
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("result").textContent = data;
-    })
-    .catch(error => {
-      document.getElementById("result").textContent =
-        "Erro: " + error;
-    });
+      .then(async response => {
+        const body = await response.text();
+
+        result.textContent =
+          "REQUISIÇÃO CONCLUÍDA\n\n" +
+          "HTTP: " + response.status + "\n" +
+          "URL: " + response.url + "\n\n" +
+          "RESPOSTA:\n" + body;
+      })
+      .catch(error => {
+        result.textContent =
+          "REQUISIÇÃO BLOQUEADA/FALHOU\n\n" +
+          "Tipo: " + error.name + "\n" +
+          "Mensagem: " + error.message +
+          "\n\nOrigem:\n" + window.location.origin;
+      });
   </script>
 </body>
 </html>
