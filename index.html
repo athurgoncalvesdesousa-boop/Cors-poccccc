@@ -1,42 +1,5 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagnóstico CORS</title>
-</head>
-<body>
-  <h2>Diagnóstico CORS</h2>
-  <pre id="result">Iniciando...</pre>
-
-  <script>
-    const result = document.getElementById("result");
-
-
-    result.textContent =
-      "Origem desta página:\n" + window.location.origin +
-      "\n\nEnviando requisição...";
-
-    fetch(url, {
-      method: "GET",
-      credentials: "include"
-    })
-      .then(async response => {
-        const body = await response.text();
-
-        result.textContent =
-          "REQUISIÇÃO CONCLUÍDA\n\n" +
-          "HTTP: " + response.status + "\n" +
-          "URL: " + response.url + "\n\n" +
-          "RESPOSTA:\n" + body;
-      })
-      .catch(error => {
-        result.textContent =
-          "REQUISIÇÃO BLOQUEADA/FALHOU\n\n" +
-          "Tipo: " + error.name + "\n" +
-          "Mensagem: " + error.message +
-          "\n\nOrigem:\n" + window.location.origin;
-      });
-  </script>
-</body>
-</html>
+exemplo.com
+uol.com.br
+bol.com.br
+uol.com
+bol.com
