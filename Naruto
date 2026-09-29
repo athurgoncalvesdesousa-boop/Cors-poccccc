@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<body>
+<h2>CORS PoC</h2>
+<pre id="out">Testando...</pre>
+
+<script>
+const url = "COLE_AQUI_A_URL_DO_COLLECT";
+
+fetch(url, {
+    method: "GET",
+    mode: "cors",
+    credentials: "omit"
+})
+.then(async r => {
+    const body = await r.text();
+
+    document.getElementById("out").textContent =
+        "STATUS: " + r.status +
+        "\n\nBODY:\n" + body;
+})
+.catch(e => {
+    document.getElementById("out").textContent =
+        "ERRO:\n" + e;
+});
+</script>
+</body>
+</html>
