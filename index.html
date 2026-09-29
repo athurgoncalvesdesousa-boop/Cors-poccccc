@@ -1,28 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>CORS PoC</title>
+</head>
 <body>
-<h2>CORS PoC</h2>
-<pre id="out">Testando...</pre>
+    <h2>PoC</h2>
+    <pre id="out">Testando...</pre>
 
-<script>
-const url = "https://collect.abercrombie.com/";
+    <script>
+        const url = "https://collect.abercrombie.com/abercrombie-hco/main/01a034ad7486001e852ef5fb4e54050440023010004da?callback=utag.ut%5B%22writevamain%22%5D&rnd=1790711715781&tealium_cookie_domain=.abercrombie.com";
 
-fetch(url, {
-    method: "GET",
-    mode: "cors",
-    credentials: "omit"
-})
-.then(async r => {
-    const body = await r.text();
+        fetch(url, {
+            method: "GET",
+            mode: "cors",
+            credentials: "omit"
+        })
+        .then(async r => {
+            const body = await r.text();
 
-    document.getElementById("out").textContent =
-        "STATUS: " + r.status +
-        "\n\nBODY:\n" + body;
-})
-.catch(e => {
-    document.getElementById("out").textContent =
-        "ERRO:\n" + e;
-});
-</script>
+            document.getElementById("out").textContent =
+                "STATUS: " + r.status +
+                "\n\nBODY:\n" + body;
+        })
+        .catch(e => {
+            document.getElementById("out").textContent =
+                "ERRO:\n" + e;
+        });
+    </script>
 </body>
 </html>
