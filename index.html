@@ -1,91 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS PoC</title>
-
-    <style>
-        body {
-            font-family: monospace;
-            background: #111;
-            color: #eee;
-            padding: 20px;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            word-break: break-word;
-            background: #000;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        button {
-            padding: 10px 16px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
+<html>
 <body>
-
 <h2>CORS PoC</h2>
-
-<button onclick="testar()">Testar endpoint</button>
-
-<pre id="resultado">Aguardando teste...</pre>
+<pre id="out">Testando...</pre>
 
 <script>
-async function testar() {
-
-    const resultado = document.getElementById("resultado");
-
-    const url =
-        "https://collect.abercrombie.com/abercrombie-hco/main/01a034ad7486001e852ef5fb4e54050440023010004da?callback=utag.ut%5B%22writevamain%22%5D&rnd=1790711715781&tealium_cookie_domain=.abercrombie.com";
-
-    resultado.textContent = "Enviando requisição...";
-
-    try {
-
-        const response = await fetch(url, {
-            method: "GET",
-            mode: "cors",
-            credentials: "omit",
-            cache: "no-store"
-        });
-
-        const body = await response.text();
-
-        resultado.textContent =
-            "STATUS: " + response.status +
-            "\n" +
-            "OK: " + response.ok +
-            "\n" +
-            "BYTES: " + body.length +
-            "\n" +
-            "CONTENT-TYPE: " +
-            (response.headers.get("content-type") || "não disponível") +
-            "\n" +
-            "ACAO: " +
-            (response.headers.get("access-control-allow-origin") || "não disponível") +
-            "\n" +
-            "ACAC: " +
-            (response.headers.get("access-control-allow-credentials") || "não disponível") +
-            "\n\n" +
-            "===== BODY =====\n\n" +
-            body;
-
-    } catch (error) {
-
-        resultado.textContent =
-            "ERRO/CORS:\n\n" +
-            error;
-    }
-}
+fetch("https://rpc.drpc.testnet.arc.network/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "eth_chainId",
+        params: []
+    })
+})
+.then(async r => {
+    const text = await r.text();
+    document.getElementById("out").textContent =
+        "STATUS: " + r.status + "\n\n" + text;
+})
+.catch(e => {
+    document.getElementById("out").textContent =
+        "ERRO: " + e;
+});
 </script>
-
 </body>
 </html>
