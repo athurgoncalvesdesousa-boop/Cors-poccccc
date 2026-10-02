@@ -1,31 +1,22 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h2>CORS PoC</h2>
-<pre id="out">Testando...</pre>
+<pre><code>
+&lt;!doctype html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;CORS Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
-<script>
-fetch("https://rpc.drpc.testnet.arc.network/", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: 1,
-        method: "eth_chainId",
-        params: []
-    })
-})
-.then(async r => {
-    const text = await r.text();
-    document.getElementById("out").textContent =
-        "STATUS: " + r.status + "\n\n" + text;
-})
-.catch(e => {
-    document.getElementById("out").textContent =
-        "ERRO: " + e;
-});
-</script>
-</body>
-</html>
+  &lt;button type="button" onclick="testCors()"&gt;
+    Iniciar teste
+  &lt;/button&gt;
+
+  &lt;script&gt;
+    async function testCors() {
+      // código aqui
+    }
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
