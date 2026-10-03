@@ -1,22 +1,32 @@
-<pre><code>
-&lt;!doctype html&gt;
-&lt;html lang="pt-BR"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;title&gt;CORS Test&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>CORS PoC</title>
+</head>
+<body>
+  <h2>CORS PoC</h2>
+  <pre id="out">Testando...</pre>
 
-  &lt;button type="button" onclick="testCors()"&gt;
-    Iniciar teste
-  &lt;/button&gt;
+<script>
+const out = document.getElementById("out");
 
-  &lt;script&gt;
-    async function testCors() {
-      // código aqui
-    }
-  &lt;/script&gt;
+const url = "COLE_AQUI_A_URL_EXATA_DA_REQUISICAO";
 
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+fetch(url, {
+  method: "GET"
+})
+.then(async response => {
+  const body = await response.text();
+
+  out.textContent =
+    "HTTP: " + response.status +
+    "\n\n" +
+    body;
+})
+.catch(error => {
+  out.textContent = "CORS bloqueou ou a requisição falhou:\n" + error;
+});
+</script>
+</body>
+</html>
