@@ -1,41 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>CORS PoC</title>
-</head>
-
+<html>
 <body>
-  <h1>CORS PoC</h1>
-  <p>Testando...</p>
-
-  <script>
-    const endpoint =
-      "https://login.portswigger.net/forms/api/forms/ap_gFDHkUmP82ufvTtvQLPVFx/validations/$start";
-
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        formData: {},
-        metaData: {}
-      })
-    })
-    .then(async r => {
-      const body = await r.text();
-
-      document.body.innerHTML =
-        "<h1>HTTP: " + r.status + "</h1>" +
-        "<pre>" + body.replace(/</g, "&lt;") + "</pre>";
-    })
-    .catch(e => {
-      document.body.innerHTML =
-        "<h1>Erro CORS/Fetch</h1><pre>" +
-        String(e) +
-        "</pre>";
-    });
-  </script>
+<h1>TESTE OK</h1>
 </body>
 </html>
