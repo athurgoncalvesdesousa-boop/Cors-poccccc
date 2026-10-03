@@ -1,32 +1,19 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <title>CORS PoC</title>
-</head>
+<html>
 <body>
-  <h2>CORS PoC</h2>
-  <pre id="out">Testando...</pre>
+<h2>CORS PoC</h2>
+<pre id="out">Carregando...</pre>
 
 <script>
-const out = document.getElementById("out");
-
-const url = "COLE_AQUI_A_URL_EXATA_DA_REQUISICAO";
-
-fetch(url, {
-  method: "GET"
-})
-.then(async response => {
-  const body = await response.text();
-
-  out.textContent =
-    "HTTP: " + response.status +
-    "\n\n" +
-    body;
-})
-.catch(error => {
-  out.textContent = "CORS bloqueou ou a requisição falhou:\n" + error;
-});
+fetch("COLE_AQUI_A_URL_DO_ENDPOINT")
+  .then(r => r.text())
+  .then(data => {
+    document.getElementById("out").textContent = data;
+  })
+  .catch(e => {
+    document.getElementById("out").textContent =
+      "Erro/CORS: " + e;
+  });
 </script>
 </body>
 </html>
