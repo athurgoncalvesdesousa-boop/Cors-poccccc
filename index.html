@@ -1,19 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CORS PoC</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>CORS PoC</h1>
+
+<p>Origin desta página:</p>
+<pre id="origin"></pre>
+
+<p>Resultado:</p>
+<pre id="result">Executando...</pre>
+
 <script>
-fetch("https://login.portswigger.net/forms/api/forms/ap_gFDHkUmP82ufvTtvQLPVFx/validations/$start", {
+const endpoint =
+  "https://login.portswigger.net/forms/api/forms/ap_gFDHkUmP82ufvTtvQLPVFx/validations/$start";
+
+document.getElementById("origin").textContent = location.origin;
+
+fetch(endpoint, {
   method: "POST",
+
   headers: {
     "Content-Type": "application/json"
   },
+
   body: JSON.stringify({
     formData: {},
-    metaData: {}
+    metaData: {
+      navigator: {
+        userAgent: navigator.userAgent,
+        language: navigator.language
+      },
+      navigation: {
+        referer: location.href
+      }
+    }
   })
 })
-.then(async r => {
-  document.body.innerText =
-    "Status: " + r.status + "\n\n" + await r.text();
+.then(async response => {
+
+  const text = await response.text();
+
+  document.getElementById("result").textContent =
+    "HTTP: " + response.status +
+    "\n\n" +
+    "Resposta:\n" +
+    text;
 })
-.catch(e => {
-  document.body.innerText = "Erro/CORS: " + e;
+.catch(error => {
+
+  document.getElementById("result").textContent =
+    "FETCH/CORS ERROR:\n\n" +
+    error;
 });
 </script>
+
+</body>
+</html>
