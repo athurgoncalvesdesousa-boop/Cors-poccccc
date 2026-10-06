@@ -1,33 +1,20 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>CORS Test - Arc Testnet</title>
-</head>
+<html>
 <body>
-  <h2>Arc Testnet CORS Test</h2>
-  <pre id="result">Testando...</pre>
+<h2>Arc CORS diagnostic</h2>
+<pre id="r">Testing...</pre>
 
-  <script>
-    const result = document.getElementById("result");
-
-    fetch("https://explorer.testnet.arc.io/api/account/v2/user/info", {
-      method: "GET",
-      credentials: "include"
-    })
-    .then(async response => {
-      const text = await response.text();
-
-      result.textContent =
-        "HTTP: " + response.status +
-        "\n\nCORS READ SUCCESS\n\n" +
-        text;
-    })
-    .catch(error => {
-      result.textContent =
-        "CORS READ FAILED\n\n" +
-        error;
-    });
-  </script>
-</body>
-</html>
+<script>
+fetch("https://explorer.testnet.arc.io/api/account/v2/user/info", {
+  credentials: "include"
+})
+.then(async r => {
+  document.getElementById("r").textContent =
+    "STATUS: " + r.status + "\n\n" +
+    await r.text();
+})
+.catch(e => {
+  document.getElementById("r").textContent =
+    "FETCH ERROR:\n" + e;
+});
+</script>
